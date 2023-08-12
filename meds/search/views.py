@@ -1,33 +1,13 @@
-from os import path
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect,get_object_or_404
-from django.template.loader import render_to_string
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.views.generic.edit import FormView
-from main import forms
-from django.views.generic.list import ListView
-from .forms import  ContactForm
-from main import forms,models
-from django.shortcuts import get_object_or_404, render
-from.models import basketline, product, producttag, Room, Message
+from . import forms
 import logging
 from django.contrib.auth import login ,authenticate
 from django.contrib import messages
 # offer users a way to add, change, and remove their addresses
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django .views.generic.edit import FormView,CreateView,UpdateView,DeleteView
+from django .views.generic.edit import FormView
 from django .views.generic.edit import (
      FormView,
-     CreateView,
-     UpdateView,
-     DeleteView,
     )
-from . import models
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.http import HttpResponse, JsonResponse
 
 # Create your views here.
 
