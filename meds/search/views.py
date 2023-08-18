@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from django.views.generic.edit import FormView
 from . import forms
 import logging
@@ -11,7 +12,8 @@ from django .views.generic.edit import (
 
 # Create your views here.
 
-
+def home(request):
+    return render(request, "home.html", {})
 logger= logging.getLogger(__name__)
 
 class signupview(FormView):
