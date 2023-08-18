@@ -10,7 +10,7 @@ from django.forms import inlineformset_factory
 
 import logging
 
-
+logger = logging.getLogger(__name__)
 
 
 
@@ -19,20 +19,7 @@ class Usercreationform(Djangousercreationform):
         model=models.user
         fields=("email",)
         field_class={"email":UsernameField}
-    def send_mail(self):
-        logging.Logger.info(
-            "sending signup email for email =%s",
-            self.cleaned_data["email"],
-        )
-        message="welcome{}".format(self.cleaned_data["email"])
-        send_mail(
-            "welcome to Booktime",
-            message,
-            "site@booktime.domain",
-            [self.cleaned_data["email"]],
-            fail_silently=True,
-        )        
-        
+   
         
 class authenticationform(forms.Form):
     email=forms.EmailField()

@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.edit import FormView
+
+from . import models
 from . import forms
 import logging
 from django.contrib.auth import login ,authenticate
@@ -9,7 +11,8 @@ from django .views.generic.edit import FormView
 from django .views.generic.edit import (
      FormView,
     )
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.list import ListView
 # Create your views here.
 
 def home(request):
@@ -20,7 +23,7 @@ class signupview(FormView):
     template_name="signup.html"
     form_class=forms.Usercreationform
     def get_success_url(self) :
-        redirect_to=self.request.GET.get("next","/")
+        redirect_to=self.request.GET.get("next","")
         return redirect_to
     def form_valid(self, form) :
         response=super().form_valid(form)
@@ -32,8 +35,13 @@ class signupview(FormView):
         )
         user=authenticate(email=email,password=raw_password)
         login(self.request,user)
-        form.send_mail()
-        messages.info(
-            self.request,"you signed up succesfully"
-        )
+       
         return response
+    
+
+
+
+class notelistview(LoginRequiredMixin,ListView):
+    model=models.product
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)    

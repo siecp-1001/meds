@@ -9,6 +9,7 @@ app_name='search'
 urlpatterns=[
      path("login/",auth_views.LoginView.as_view(template_name="login.html",form_class=forms.authenticationform,),name="login",),
     path("signup/", views.signupview.as_view(), name="signup"),
+    path("note/",views.notelistview.as_view(),name="notes_list"),
     path("",TemplateView.as_view(template_name="pages/home.html"),name="home",),
 
 ]
