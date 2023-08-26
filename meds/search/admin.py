@@ -8,6 +8,22 @@ from django.contrib.auth.admin import (
 # Register your models here.
 
 
+class productadmin(admin.ModelAdmin):
+    list_display = ('name', 'slug', 'in_stock', 'price')
+    list_filter = ('active', 'in_stock', 'date_updated')
+    list_editable = ('in_stock', )
+    search_fields = ('name',)
+    prepopulated_fields = {"slug": ("name",)}
+admin.site.register(models.product,productadmin)
+
+
+class producttagadmin(admin.ModelAdmin):
+    list_display = ('name', 'slug')
+    list_filter = ('active',)
+    search_fields = ('name',)
+    prepopulated_fields = {"slug": ("name",)}
+   
+admin.site.register(models.producttag, producttagadmin)
 @admin.register(models.user)
 
 class useradmin (DjangoUserAdmin):
@@ -53,3 +69,7 @@ class useradmin (DjangoUserAdmin):
     )
     search_fields=("email","first_name","last_name")
     ordering=("email",)
+
+
+
+    

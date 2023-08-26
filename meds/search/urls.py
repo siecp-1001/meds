@@ -7,9 +7,11 @@ from django.contrib.auth import views as auth_views
 from . import forms
 app_name='search'
 urlpatterns=[
-     path("login/",auth_views.LoginView.as_view(template_name="login.html",form_class=forms.authenticationform,),name="login",),
+    path("login/",auth_views.LoginView.as_view(template_name="login.html",form_class=forms.authenticationform,),name="login",),
     path("signup/", views.signupview.as_view(), name="signup"),
-    path("note/",views.notelistview.as_view(),name="notes_list"),
+    path( "products/", views.productlistview.as_view(), name="products" ),
+    path("products/<slug:tag>/", views.productlistview.as_view(),name="products",),
+    path("product/<slug:slug>/", DetailView.as_view(model= models.product),name="product",),   
     path("",TemplateView.as_view(template_name="pages/home.html"),name="home",),
-
+    path('create-pdf', views.pdf_report_create, name='create-pdf'),
 ]

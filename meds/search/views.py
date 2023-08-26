@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 
@@ -13,6 +14,8 @@ from django .views.generic.edit import (
     )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
+from django.template.loader import get_template
+import xhtml2pdf.pisa as pisa
 # Create your views here.
 
 def home(request):
@@ -41,7 +44,37 @@ class signupview(FormView):
 
 
 
-class notelistview(LoginRequiredMixin,ListView):
-    model=models.product
-    def get_queryset(self):
-        return self.model.objects.filter(user=self.request.user)    
+class productlistview(ListView):
+    template_name="pages/product_list.html"
+    model = models.product
+    paginate_by=7
+    context_object_name="products"
+    def  get_queryset(self):
+      return models.product.objects.all()[:7]  
+    
+
+
+
+
+def pdf_report_create(request):
+    products = models.product.objects.all()
+
+    template_path = 'pdfReport.html'
+
+    context = {'products': products}
+
+    response = HttpResponse(content_type='application/pdf')
+
+    response['Content-Disposition'] = 'filename="products_report.pdf"'
+
+    template = get_template(template_path)
+
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funy view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response

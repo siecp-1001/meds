@@ -77,10 +77,5 @@ class product(models.Model):
     date_updated=models.DateTimeField(auto_now=True) 
     objects= Activemanager()
     tags= models.ManyToManyField(producttag,blank=True)
-    def __str__(self):
-        return ",".join(
-            [
-                self.name,
-                
-            ]
-        )
+    def __str__(self) :
+      return self.name
