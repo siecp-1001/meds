@@ -77,13 +77,12 @@ WSGI_APPLICATION = 'meds.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.parse(
+        'postgres://meds:qoXCALGi0rvDEb0HNHnhFWYua0tJrVO2@dpg-cjm0vmdk5scs73bq9290-a.oregon-postgres.render.com/meds',
+        
+    )
 }
-DATABASES["default"]= dj_database_url.parse("postgres://meds:qoXCALGi0rvDEb0HNHnhFWYua0tJrVO2@dpg-cjm0vmdk5scs73bq9290-a/meds")
-# Password validation
+
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
