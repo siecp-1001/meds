@@ -13,5 +13,5 @@ urlpatterns=[
     path("products/<slug:tag>/", views.productlistview.as_view(),name="products",),
     path("product/<slug:slug>/", DetailView.as_view(model= models.product),name="product",),   
     path("",TemplateView.as_view(template_name="pages/home.html"),name="home",),
-    path('create-pdf', views.pdf_report_create, name='create-pdf'),
+   
 ]

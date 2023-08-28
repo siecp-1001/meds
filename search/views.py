@@ -15,7 +15,7 @@ from django .views.generic.edit import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.template.loader import get_template
-import xhtml2pdf.pisa as pisa
+
 # Create your views here.
 
 def home(request):
@@ -55,26 +55,3 @@ class productlistview(ListView):
 
 
 
-
-def pdf_report_create(request):
-    products = models.product.objects.all()
-
-    template_path = 'pdfReport.html'
-
-    context = {'products': products}
-
-    response = HttpResponse(content_type='application/pdf')
-
-    response['Content-Disposition'] = 'filename="products_report.pdf"'
-
-    template = get_template(template_path)
-
-    html = template.render(context)
-
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funy view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
