@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 from . import views,models
 from django.views.generic.detail import DetailView
 from django.contrib.auth import views as auth_views
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import forms
 app_name='search'
 urlpatterns=[
@@ -15,3 +16,4 @@ urlpatterns=[
     path("",TemplateView.as_view(template_name="pages/home.html"),name="home",),
    
 ]
+urlpatterns += staticfiles_urlpatterns()
