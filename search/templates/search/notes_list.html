@@ -8,17 +8,17 @@
     
     </p>
     <p>
-      <a href="{% url 'main:note_update' notes.id %}">Update address</a>
+      <a href="{% url 'search:note_update' notes.id %}">Update address</a>
     </p>
     <p>
-      <a href="{% url 'main:note_delete' notes.id %}">Delete address</a>
+      <a href="{% url 'search:note_delete' notes.id %}">Delete address</a>
     </p>
     {% if not forloop.last %}
       <hr>
     {% endif %}
   {% endfor %}
-  <a class="btn btn-primary m-2" href="{% url 'main:create-pdf' %}">Create PDF</a>
+  
   <p>
-    <a href="{% url 'main:note_create'   %}">Add new address</a>
+    <a href="{% url 'search:note_create'   %}">Add new address</a>
   </p>
 {% endblock content %}
