@@ -79,3 +79,18 @@ class product(models.Model):
     tags= models.ManyToManyField(producttag,blank=True)
     def __str__(self) :
       return self.name
+    
+
+
+
+class notes(models.Model):
+    user=models.ForeignKey(user,on_delete=models.CASCADE)
+    NOTE=models.CharField(max_length=100000)
+    date = models.DateTimeField(default=datetime.now, blank=True)
+    def __str__(self):
+        return ",".join(
+            [
+                self.NOTE,
+                self.date,
+            ]
+        )        

@@ -14,5 +14,8 @@ urlpatterns=[
     path("products/<slug:tag>/", views.productlistview.as_view(),name="products",),
     path("product/<slug:slug>/", DetailView.as_view(model= models.product),name="product",),   
     path("",TemplateView.as_view(template_name="pages/home.html"),name="home",),
-   
+    path("note/",views.notelistview.as_view(),name="notes_list"),
+    path("note/create/",views.notecreateview.as_view(),name='note_create'),
+    path("note/<int:pk>/",views.noteupdateview.as_view(),name="note_update"),
+    path("note/<int:pk>/delete/",views.notedeleteview.as_view(),name="note_delete",),
 ]

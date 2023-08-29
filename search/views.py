@@ -8,14 +8,17 @@ import logging
 from django.contrib.auth import login ,authenticate
 from django.contrib import messages
 # offer users a way to add, change, and remove their addresses
-from django .views.generic.edit import FormView
+from django .views.generic.edit import FormView,CreateView,UpdateView,DeleteView
 from django .views.generic.edit import (
      FormView,
+     CreateView,
+     UpdateView,
+     DeleteView,
     )
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.list import ListView
 from django.template.loader import get_template
-
+from django.urls import reverse_lazy
 # Create your views here.
 
 def home(request):
@@ -55,3 +58,41 @@ class productlistview(ListView):
 
 
 
+
+class notelistview(LoginRequiredMixin,ListView):
+    model=models.notes
+    def get_queryset(self):
+        return self.model.objects.filter(user=self.request.user)
+    
+class notecreateview(LoginRequiredMixin,CreateView):
+    model=models.notes
+    fields=[
+        "NOTE",
+        "date",
+    ]  
+    success_url= reverse_lazy("search:notes_list")
+    def form_valid(self, form) :
+         obj=form.save(commit=False)
+         obj.user=self.request.user
+         obj.save()
+         return super().form_valid(form)    
+    
+
+class noteupdateview(LoginRequiredMixin,UpdateView):
+    model=models.notes 
+    fields=[
+        "NOTE",
+        "date",
+     ]  
+    success_url=reverse_lazy("search:notes_list")  
+    def get_queryset(self) :
+        return self.model.objects.filter(user=self.request.user)   
+
+
+
+class notedeleteview(LoginRequiredMixin,DeleteView):
+    model=models.notes
+    success_url=reverse_lazy("search:notes_list")
+    def get_queryset(self) :
+        return self.model.objects.filter(user=self.request.user)
+        
